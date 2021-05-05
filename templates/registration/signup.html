@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Sign up</h2>
+    <form method="post" action="{% url 'signup' %}">
+        {% if form.username.errors %}{% endif %}
+
+        <div class="form-group">
+            {% csrf_token %}
+            <div class="form-row col-md-6 mb-3">
+                <label for="id_username">{{ form.username.label_tag }}</label>
+                <input class="form-control {% if form.username.errors %}is-invalid{% endif %}" type="text"
+                       name="username" maxlength="150" autocapitalize="none"
+                       autocomplete="username" autofocus="" required="" id="id_username">
+                <div id="validationServer03Feedback" class="invalid-feedback">
+                    {% for error in form.username.errors %}{{ error }}{% endfor %}
+                </div>
+            </div>
+
+            <div class="form-row col-md-6 mb-3">
+                <label for="id_password1">{{ form.password1.label_tag }}</label>
+                <input class="form-control {% if form.password1.errors %}is-invalid{% endif %}" type="password"
+                       name="password1" autocomplete="new-password" required=""
+                       id="id_password1">
+                <div id="validationServer03Feedback" class="invalid-feedback">
+                    {% for error in form.password1.errors %}{{ error }}{% endfor %}
+                </div>
+            </div>
+
+            <div class="form-row col-md-6 mb-3">
+                <label for="id_password2">{{ form.password2.label_tag }}</label>
+                <input class="form-control {% if form.password2.errors %}is-invalid{% endif %}" type="password"
+                       name="password2" autocomplete="new-password" required=""
+                       id="id_password2">
+                <div id="validationServer03Feedback" class="invalid-feedback">
+                    {% for error in form.password2.errors %}{{ error }}{% endfor %}
+                </div>
+
+            </div>
+            <button class="btn btn-dark" type="submit">Sign up</button>
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </div>
+        {% for error in form.errors %}
+            {{ error }}
+        {% endfor %}
+    </form>
+{% endblock %}
