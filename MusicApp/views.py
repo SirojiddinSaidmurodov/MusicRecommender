@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+from MusicApp.recommender import search
+
 
 def index(request):
     return render(request, 'base.html')
@@ -28,3 +30,8 @@ def signup(request):
 @login_required
 def account(request):
     return render(request, 'registration/account.html')
+
+
+def searchhtml(request):
+    query = request.GET.get("query")
+    return render(request, 'results.html', {'results': search(query), 'query': query})

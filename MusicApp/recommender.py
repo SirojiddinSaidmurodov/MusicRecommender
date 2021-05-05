@@ -58,6 +58,36 @@ def get_song_data(song, spotify_data):
         return find_song(song['name'], song['year'])
 
 
+def find_song_by_id(spotify_id):
+    song_data = defaultdict()
+    results = sp.track(spotify_id)
+    if not results:
+        return None
+
+    track_id = results['id']
+    audio_features = sp.audio_features(track_id)[0]
+
+    song_data['name'] = [results['name']]
+    song_data['year'] = [int(results['album']['release_date'][:4])]
+    song_data['explicit'] = [int(results['explicit'])]
+    song_data['duration_ms'] = [results['duration_ms']]
+    song_data['popularity'] = [results['popularity']]
+
+    for key, value in audio_features.items():
+        song_data[key] = value
+
+    return pd.DataFrame(song_data)
+
+
+def get_song_data_by_id(spotify_id, spotify_data):
+    try:
+        song_data = spotify_data[(spotify_data['id'] == spotify_id)].iloc[0]
+        return song_data
+
+    except IndexError:
+        return find_song_by_id(spotify_id)
+
+
 def get_mean_vector(song_list, spotify_data):
     song_vectors = []
 
@@ -101,17 +131,24 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
     return rec_songs[metadata_cols].to_dict(orient='records')
 
 
-recommendation = recommend_songs([
-    {
-        'name': "We Don't Talk Anymore (feat. Selena Gomez)",
-        'year': 2016
-    }, {
-        "name": "Scared to Be Lonely",
-        "year": 2017
-    },
-    {
-        "name": "In My Feelings",
-        "year": 2018
-    }
-], data, n_songs=20)
-print(json.dumps(recommendation, indent=4))
+def search(song):
+    return sp.search(q='track: {}'.format(song), limit=10)
+
+
+if __name__ == '__main__':
+    recommendation = recommend_songs([
+        {
+            'name': "We Don't Talk Anymore (feat. Selena Gomez)",
+            'year': 2016
+        }, {
+            "name": "Scared to Be Lonely",
+            "year": 2017
+        },
+        {
+            "name": "In My Feelings",
+            "year": 2018
+        }
+    ], data, n_songs=20)
+    print(json.dumps(recommendation, indent=4))
+
+    print(search("We Don't Talk Anymore (feat. Selena Gomez)"))

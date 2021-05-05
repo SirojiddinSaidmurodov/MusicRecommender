@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for item in results.tracks.items %}
+            <li>
+                <p>{% for image in item.album.images %}
+                    {% if forloop.first %}<img src="{{ image.url }}" height="128" width="128">
+                    {% endif %}
+                {% endfor %}</p>
+                {% if item.artists|length > 1 %}
+                    {% for artist in item.artists %}{{ artist.name }}
+                        {% if forloop.last %}{% else %},{% endif %}{% endfor %}
+                {% else %}
+                    {% for artist in item.artists %}{{ artist.name }}{% endfor %}
+                {% endif %} — {{ item.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
