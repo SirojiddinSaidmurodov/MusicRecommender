@@ -135,6 +135,13 @@ def search(song):
     return sp.search(q='track: {}'.format(song), limit=10)
 
 
+def get_songs(songs):
+    result = []
+    for song in songs:
+        result.append(sp.track(song))
+    return result
+
+
 if __name__ == '__main__':
     recommendation = recommend_songs([
         {

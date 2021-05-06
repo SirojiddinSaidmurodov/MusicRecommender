@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Recommendations{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <div class="container" id="saved">
+        [[ message ]]
+        [[ songs ]]
+    </div>
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

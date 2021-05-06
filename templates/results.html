@@ -7,7 +7,7 @@
         {% for item in results.tracks.items %}
             <li>
                 <p>{% for image in item.album.images %}
-                    {% if forloop.first %}<img src="{{ image.url }}" height="128" width="128">
+                    {% if forloop.first %}<img src="{{ image.url }}" height="128" width="128" alt="album">
                     {% endif %}
                 {% endfor %}</p>
                 {% if item.artists|length > 1 %}
