@@ -21,6 +21,9 @@ let searchApp = new Vue({
             } else {
                 this.result = []
             }
+        },
+        like(song) {
+            axios.post('http://127.0.0.1:8000/like/' + song)
         }
     }
 });

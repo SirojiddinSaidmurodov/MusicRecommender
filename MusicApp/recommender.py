@@ -132,7 +132,7 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
 
 
 def search_songs(song):
-    return sp.search(q='track: {}'.format(song), limit=100)
+    return sp.search(q='track: {}'.format(song), limit=20)
 
 
 def get_songs(songs):
@@ -157,5 +157,3 @@ if __name__ == '__main__':
         }
     ], data, n_songs=20)
     print(json.dumps(recommendation, indent=4))
-
-    print(search("We Don't Talk Anymore (feat. Selena Gomez)"))

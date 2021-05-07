@@ -84,3 +84,15 @@ class UserList(generics.ListAPIView):
 
 def search_json(request, query):
     return JsonResponse(search_songs(query), safe=False)
+
+
+def like(request, song):
+    if request.method == "POST":
+        try:
+            liked = LikedSongs.objects.get(spotify_id=song)
+        except LikedSongs.DoesNotExist:
+            liked = LikedSongs()
+            liked.spotify_id = song
+            liked.user = request.user
+            liked.save()
+        return Response(status=status.HTTP_200_OK)

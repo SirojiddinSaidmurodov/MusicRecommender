@@ -3,13 +3,14 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
+    {% load static %}
     <div id="searchApp">
         <div class="input-group mb-3 input-group-lg">
             <span class="input-group-text" id="addon-wrapping">Results for </span>
             <input type="text" class="form-control" placeholder="Start here typing to search" aria-label="Query"
                    aria-describedby="addon-wrapping" v-model="query">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="get_result()">
-                Button
+                Search
             </button>
         </div>
         <div class="row">
@@ -33,6 +34,9 @@
                                 <h6 class="card-title"> [[song.artists[0].name]]</h6>
                             </div>
                             <p class="card-text">[[song.name]]</p>
+                            <button v-on:click="like(song.id)" class="btn danger">
+                                <img src="{% static 'like.png' %}">
+                            </button>
                         </div>
                     </div>
                 </div>
