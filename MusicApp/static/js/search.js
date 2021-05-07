@@ -1,7 +1,7 @@
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
-let app = new Vue({
+let searchApp = new Vue({
     delimiters: ["[[", "]]"],
     el: '#app',
     data: {

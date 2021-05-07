@@ -1,7 +1,7 @@
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 const songsUrl = 'http://127.0.0.1:8000/songsjson/'
-let app = new Vue({
+let savedSongs = new Vue({
     delimiters: ["[[", "]]"],
     el: '#saved',
     data: {

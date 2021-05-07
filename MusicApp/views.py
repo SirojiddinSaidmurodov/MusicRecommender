@@ -51,10 +51,7 @@ def searchhtml(request):
 
 
 def songs_json(request):
-    songs = LikedSongs.objects.filter(user=request.user)
-    songlist = []
-    for song in songs:
-        songlist.append(song.spotify_id)
+    songlist = [song.spotify_id for song in LikedSongs.objects.filter(user=request.user)]
     return JsonResponse(get_songs(songlist), safe=False)
 
 

@@ -4,9 +4,32 @@
 
 {% block content %}
     {% load static %}
-    <div class="container" id="saved">
-        [[ message ]]
-        [[ songs ]]
+    <div class="container">
+        <div class="row" id="saved">
+            <div class="col-8">
+                <div v-if="songs.length==0">
+                    No songs saved
+                </div>
+                <div v-for="song in songs" class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img alt="album" v-bind:src="song.album.images[0].url" height="285px" width="285px"
+                             style="padding: 0.5rem">
+                        <div class="card-body">
+                            <div v-if="song.artists.length > 1">
+
+                            </div>
+                            <div v-if="song.artists.length == 1">
+                                <h6 class="card-title"> [[song.artists[0].name]]</h6>
+                            </div>
+                            <p class="card-text">[[song.name]]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                [[ message ]]
+            </div>
+        </div>
     </div>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
