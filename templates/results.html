@@ -3,19 +3,42 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for item in results.tracks.items %}
-            <li>
-                <p>{% for image in item.album.images %}
-                    {% if forloop.first %}<img src="{{ image.url }}" height="128" width="128" alt="album">
-                    {% endif %}
-                {% endfor %}</p>
-                {% if item.artists|length > 1 %}
-                    {% for artist in item.artists %}{{ artist.name }}
-                        {% if forloop.last %}{% else %},{% endif %}{% endfor %}
-                {% else %}
-                    {% for artist in item.artists %}{{ artist.name }}{% endfor %}
-                {% endif %} — {{ item.name }}</li>
-        {% endfor %}
-    </ul>
+    <div id="searchApp">
+        <div class="input-group mb-3 input-group-lg">
+            <span class="input-group-text" id="addon-wrapping">Results for </span>
+            <input type="text" class="form-control" placeholder="Start here typing to search" aria-label="Query"
+                   aria-describedby="addon-wrapping" v-model="query">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="get_result()">
+                Button
+            </button>
+        </div>
+        <div class="row">
+            <div v-if="result.length==0">
+                No songs found
+            </div>
+            <div v-if="result.length>0" class="row row-cols-1 row-cols-md-4 g-4">
+                <div v-for="song in result" class="col">
+                    <div class="card" style="width: 15rem;">
+                        <img alt="album" loading="lazy" v-bind:src="song.album.images[0].url" height="225px"
+                             width="225px"
+                             style="padding: 0.5rem">
+                        <div class="card-body">
+                            <div class="card-title" v-if="song.artists.length > 1">
+                                <span v-for="artist in song.artists">
+
+                                    [[artist.name]] ,
+                                </span>
+                            </div>
+                            <div v-if="song.artists.length == 1">
+                                <h6 class="card-title"> [[song.artists[0].name]]</h6>
+                            </div>
+                            <p class="card-text">[[song.name]]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% load static %}
+    <script src="{% static 'js/search.js' %}"></script>
 {% endblock %}

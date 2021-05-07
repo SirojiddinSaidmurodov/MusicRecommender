@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
-from .recommender import search
+from .recommender import search_songs
 from .recommender import get_songs
 from .serializer import LikedSongsSerializer
 from .serializer import UserSerializer
@@ -45,9 +45,8 @@ def account(request):
 
 
 @login_required
-def searchhtml(request):
-    query = request.GET.get("query")
-    return render(request, 'results.html', {'results': search(query), 'query': query})
+def search(request):
+    return render(request, 'results.html')
 
 
 def songs_json(request):
@@ -81,3 +80,7 @@ class UserDetail(APIView):
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+def search_json(request, query):
+    return JsonResponse(search_songs(query), safe=False)

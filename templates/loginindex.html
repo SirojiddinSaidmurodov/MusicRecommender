@@ -7,12 +7,14 @@
     <div class="container">
         <div class="row" id="saved">
             <div class="col-8">
+                <h4 class="display-4">Your favorite songs</h4>
                 <div v-if="songs.length==0">
                     No songs saved
                 </div>
                 <div v-for="song in songs" class="col">
                     <div class="card" style="width: 18rem;">
-                        <img alt="album" v-bind:src="song.album.images[0].url" height="285px" width="285px"
+                        <img alt="album" loading="lazy" v-bind:src="song.album.images[0].url" height="285px"
+                             width="285px"
                              style="padding: 0.5rem">
                         <div class="card-body">
                             <div v-if="song.artists.length > 1">

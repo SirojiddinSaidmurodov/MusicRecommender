@@ -131,8 +131,8 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
     return rec_songs[metadata_cols].to_dict(orient='records')
 
 
-def search(song):
-    return sp.search(q='track: {}'.format(song), limit=10)
+def search_songs(song):
+    return sp.search(q='track: {}'.format(song), limit=100)
 
 
 def get_songs(songs):
