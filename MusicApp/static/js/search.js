@@ -23,7 +23,7 @@ let searchApp = new Vue({
             }
         },
         like(song) {
-            axios.post('http://127.0.0.1:8000/like/' + song)
+            axios.post('http://127.0.0.1:8000/songs/' + song)
         }
     }
 });

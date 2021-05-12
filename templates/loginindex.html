@@ -13,7 +13,7 @@
                 </div>
                 <div v-for="song in songs" class="col">
                     <div class="card" style="width: 18rem;">
-                        <img alt="album" loading="lazy" v-bind:src="song.album.images[0].url" height="285px"
+                        <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url" height="285px"
                              width="285px"
                              style="padding: 0.5rem">
                         <div class="card-body">
@@ -24,6 +24,8 @@
                                 <h6 class="card-title"> [[song.artists[0].name]]</h6>
                             </div>
                             <p class="card-text">[[song.name]]</p>
+                            <button class="btn btn-danger" v-on:click="dislike(song.id)">
+                                <img src="{% static 'like.png' %}"></button>
                         </div>
                     </div>
                 </div>

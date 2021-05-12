@@ -136,10 +136,7 @@ def search_songs(song):
 
 
 def get_songs(songs):
-    result = []
-    for song in songs:
-        result.append(sp.track(song))
-    return result
+    return [sp.track(song) for song in songs]
 
 
 if __name__ == '__main__':

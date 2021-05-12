@@ -8,7 +8,8 @@ urlpatterns = [
     path('account', views.account, name='account'),
     path('search/', views.search, name='search'),
     path('search/<str:query>', views.search_json),
-    path('like/<str:song>', views.like),
+    path('songs/<str:song>', views.songs),
     path('api-auth/', include('rest_framework.urls')),
-    path('songsjson/', views.songs_json)
+    path('songsjson/', views.songs_json),
+    path('users/', views.UserList.as_view()),
 ]
