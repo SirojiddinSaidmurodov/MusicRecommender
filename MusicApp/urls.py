@@ -12,4 +12,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('songsjson/', views.songs_json),
     path('users/', views.UserList.as_view()),
+    path('recommendation/', views.get_recommendations),
 ]

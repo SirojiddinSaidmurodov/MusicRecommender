@@ -10,7 +10,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from .models import LikedSongs
-from .recommender import get_songs
+from .recommender import get_songs, recommend
 from .recommender import search_songs
 from .serializer import UserSerializer
 
@@ -83,3 +83,14 @@ def songs(request, song):
             return Response(status=status.HTTP_200_OK)
         except LikedSongs.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(('GET',))
+@renderer_classes((JSONRenderer,))
+@login_required
+def get_recommendations(request):
+    songlist = [song.spotify_id for song in LikedSongs.objects.filter(user=request.user)]
+    if len(songlist) > 0:
+        return JsonResponse(get_songs(recommend(songlist)), safe=False)
+    else:
+        return JsonResponse("[]", safe=False)
