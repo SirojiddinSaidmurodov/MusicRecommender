@@ -8,7 +8,7 @@
         <div class="input-group mb-3 input-group-lg">
             <span class="input-group-text" id="addon-wrapping">Results for </span>
             <input type="text" class="form-control" placeholder="Start here typing to search" aria-label="Query"
-                   aria-describedby="addon-wrapping" v-model="query">
+                   aria-describedby="addon-wrapping" v-model="query" v-on:keyup.enter="get_result()">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="get_result()">
                 Search
             </button>
