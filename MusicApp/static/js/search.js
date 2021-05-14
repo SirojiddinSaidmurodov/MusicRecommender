@@ -24,6 +24,33 @@ let searchApp = new Vue({
         },
         like(song) {
             axios.post('http://127.0.0.1:8000/songs/' + song)
+        },
+        toggle(audio) {
+            if (this.oldId) {
+                if (this.oldId !== audio.id) {
+                    this.playing.pause()
+                    document.getElementById(this.oldId).src = '/static/play.png'
+                    document.getElementById(audio.id).src = '/static/pause.png'
+                    this.playing = new Audio(audio.preview_url)
+                    this.playing.play();
+                    this.oldId = audio.id
+                } else {
+                    if (this.playing.paused) {
+                        this.playing.play();
+                        document.getElementById(audio.id).src = '/static/pause.png'
+                    } else {
+                        this.playing.pause();
+                        document.getElementById(audio.id).src = '/static/play.png'
+                    }
+
+                }
+            } else {
+                this.playing = new Audio(audio.preview_url)
+                this.playing.play();
+                this.oldId = audio.id
+                document.getElementById(audio.id).src = '/static/pause.png'
+            }
         }
+
     }
 });

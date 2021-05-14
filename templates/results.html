@@ -35,9 +35,14 @@
                             <p class="card-text">[[song.name]]</p>
                         </div>
                         <div class="card-footer">
-                            <button v-on:click="like(song.id)" class="btn btn-danger    ">
-                                <img src="{% static 'like.png' %}">
-                            </button>
+                            <div class="btn-group">
+                                <button v-on:click="like(song.id)" class="btn btn-dark">
+                                    <img src="{% static 'like.png' %}">
+                                </button>
+                                <button v-if="song.preview_url!==null" class="btn btn-dark"
+                                        v-on:click="toggle(song)">
+                                    <img src="{% static 'play.png' %}" alt="play" v-bind:id="song.id"></button>
+                            </div>
                         </div>
                     </div>
                 </div>

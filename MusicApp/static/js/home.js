@@ -14,7 +14,7 @@ let savedSongs = new Vue({
         refresh() {
             axios.get(songsUrl).then(response => {
                 if (response.data !== undefined) {
-                    this.songs = response.data.tracks;
+                    this.songs = response.data;
                     console.log(this.songs)
                 } else {
                     this.songs = []
@@ -22,7 +22,7 @@ let savedSongs = new Vue({
                 axios.get('http://127.0.0.1:8000/recommendation/').then(
                     response => {
                         if (response.data !== undefined) {
-                            this.recommendations = response.data.tracks
+                            this.recommendations = response.data
                         } else {
                             this.recommendations = []
                         }
