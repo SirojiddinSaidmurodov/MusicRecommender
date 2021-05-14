@@ -19,22 +19,23 @@
             </div>
             <div v-if="result.length>0" class="row row-cols-1 row-cols-md-4 g-4">
                 <div v-for="song in result" class="col">
-                    <div class="card" style="width: 15rem;">
+                    <div class="card h-100" style="width: 15rem;">
                         <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url" height="225px"
                              width="225px"
                              style="padding: 0.5rem">
                         <div class="card-body">
-                            <div class="card-title" v-if="song.artists.length > 1">
-                                <span v-for="artist in song.artists">
-
-                                    [[artist.name]] ,
-                                </span>
+                            <div v-if="song.artists.length > 1">
+                                <h6 v-for="artist in song.artists" class="card-title">
+                                    [[artist.name]]
+                                </h6>
                             </div>
                             <div v-if="song.artists.length == 1">
                                 <h6 class="card-title"> [[song.artists[0].name]]</h6>
                             </div>
                             <p class="card-text">[[song.name]]</p>
-                            <button v-on:click="like(song.id)" class="btn danger">
+                        </div>
+                        <div class="card-footer">
+                            <button v-on:click="like(song.id)" class="btn btn-danger    ">
                                 <img src="{% static 'like.png' %}">
                             </button>
                         </div>

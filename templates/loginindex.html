@@ -4,41 +4,57 @@
 
 {% block content %}
     {% load static %}
-    <div class="container">
+    <div class="">
         <div class="row" id="saved">
             <div class="col-8">
-                <h4 class="display-4">Your favorite songs</h4>
+                <h4 class="display-6">Your favorite songs</h4>
 
                 <div v-if="songs==undefined">
                     No songs saved
                 </div>
 
-                <div class="row row-cols-1 row-cols-md-4 g-4">
-                    <div v-for="song in songs" class="col">
-                        <div class="card h-100" style="width: 10rem;">
-                            <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url"
-                                 style="padding: 0.5rem;
-                                        height: 9rem;
-                                        width: 9rem">
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+
+                    <div v-for="song in songs">
+                        <div class="card h-100 text-dark bg-light" style="max-width: 30rem">
                             <div class="card-body">
-                                <div v-if="song.artists.length > 1">
-                                    <span v-for="artist in song.artists">[[artist.name]]
-                                        <div v-if="artist<song.artists.length">,</div>
-                                    </span>
+                                <div class="row g-0">
+                                    <div class="col-md-5">
+                                        <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url"
+                                             style="max-height: 8rem;
+                                                    max-width: 8rem"
+                                             class="rounded card-img-top">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div v-if="song.artists.length > 1" class="card-title">
+                                            <h6 v-for="artist in song.artists" class="card-title">
+                                                [[artist.name]]
+                                            </h6>
+                                        </div>
+                                        <div v-if="song.artists.length == 1">
+                                            <h6 class="card-title"> [[song.artists[0].name]]</h6>
+                                        </div>
+                                        <p class="card-text">[[song.name]]</p>
+                                    </div>
+
                                 </div>
-                                <div v-if="song.artists.length == 1">
-                                    <h6 class="card-title"> [[song.artists[0].name]]</h6>
+                            </div>
+                            <div class="card-footer">
+                                <div class="btn-group">
+                                    <button class="btn btn-dark" v-on:click="dislike(song.id)">
+                                        <img src="{% static 'dislike.png' %}"></button>
+                                    <button v-if="song.preview_url!==null" class="btn btn-dark"
+                                            v-on:click="toggle(song)">
+                                        <img src="{% static 'play.png' %}" alt="play" v-bind:id="song.id">
+                                    </button>
                                 </div>
-                                <p class="card-text">[[song.name]]</p>
-                                <button class="btn btn-danger" v-on:click="dislike(song.id)">
-                                    <img src="{% static 'like.png' %}"></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                <h4 class="display-4">Recommendations</h4>
+                <h4 class="display-6">Recommendations</h4>
 
                 <div v-if="recommendations==undefined">
                     No recommendations
@@ -46,23 +62,31 @@
 
                 <div v-if="recommendations!==undefined" class="row row-cols-1 row-cols-md-2 g-4">
                     <div v-for="song in recommendations" class="col">
-                        <div class="card h-100 border-danger" style="width: 10rem;">
+                        <div class="card h-100 border-warning text-white bg-dark" style="max-width: 10rem;">
                             <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url"
-                                 height="150px"
-                                 width="150px"
-                                 style="padding: 0.5rem">
-                            <div class="card-body text-danger">
+                                 style="max-width: 9rem;
+                                 max-height: 9rem;"
+                                 class="rounded card-img-top m-2">
+                            <div class="card-body">
                                 <div v-if="song.artists.length > 1">
-                                    <span v-for="artist in song.artists">[[artist.name]]
-                                        <div v-if="artist<song.artists.length">,</div>
-                                    </span>
+                                    <h6 v-for="artist in song.artists" class="card-title">
+                                        [[artist.name]]
+                                    </h6>
                                 </div>
                                 <div v-if="song.artists.length == 1">
                                     <h6 class="card-title"> [[song.artists[0].name]]</h6>
                                 </div>
                                 <p class="card-text">[[song.name]]</p>
-                                <button class="btn btn-danger" v-on:click="like(song.id)">
-                                    <img src="{% static 'like.png' %}"></button>
+
+                            </div>
+                            <div class="card-footer">
+                                <div class="btn-group">
+                                    <button class="btn btn-light" v-on:click="like(song.id)">
+                                        <img src="{% static 'like-dark.png' %}"></button>
+                                    <button v-if="song.preview_url!==null" class="btn btn-light"
+                                            v-on:click="toggleDark(song)">
+                                        <img src="{% static 'play-dark.png' %}" alt="play" v-bind:id="song.id"></button>
+                                </div>
                             </div>
                         </div>
                     </div>
