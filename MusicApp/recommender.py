@@ -22,8 +22,10 @@ market = 'RU'
 song_cluster_pipeline = load('blobs/song_cluster')
 data = pd.read_csv("blobs/data.csv")
 
-number_cols = ['valence', 'year', 'acousticness', 'danceability', 'duration_ms', 'energy', 'explicit',
-               'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'popularity', 'speechiness', 'tempo']
+number_cols = ['valence', 'year', 'acousticness', 'danceability',
+               'duration_ms', 'energy', 'explicit',
+               'instrumentalness', 'key', 'liveness', 'loudness',
+               'mode', 'popularity', 'speechiness', 'tempo']
 
 
 def get_song_data_by_id(spotify_id, spotify_data):
@@ -75,6 +77,7 @@ def recommend(song_list):
 
 
 def recommend_songs(song_list, spotify_data, n_songs=10):
+    # TODO: change the algo: delete liked songs first, then get n_songs recommendations
     metadata_cols = ['id']
     song_center = get_mean_vector(song_list, spotify_data)
     scaler = song_cluster_pipeline.steps[0][1]
@@ -104,8 +107,17 @@ if __name__ == '__main__':
     song_cluster_pipeline = load('../blobs/song_cluster')
     data = pd.read_csv("../blobs/data.csv")
     recommendation = recommend_songs([
-        "37FXw5QGFN7uwwsLy8uAc0",
-        "3ebXMykcMXOcLeJ9xZ17XH",
-        "2G7V7zsVDxg1yRsu7Ew9RJ"
+        "0vWUhCPxpJOJR5urYbZypB",
+        "3PfIrDoz19wz7qK7tYeu62",
+        "7ef4DlsgrMEH11cDZd32M6",
+        "6WrI0LAC5M1Rw2MnX2ZvEg",
+        "0pqnGHJpmpxLKifKRmU6WP",
+        "2ENexcMEMsYk0rVJigVD3i",
+        "1DFD5Fotzgn6yYXkYsKiGs",
+        "2dBwB667LHQkLhdYlwLUZK",
+        "22VdIZQfgXJea34mQxlt81",
+        "0YEsfwQpG7ofdIiHWA0dHi",
+        "66W1rVTnEv86dIkFhoiElg",
+        "5oAuqB3aoXBm0nmyEKYxAU"
     ], data, n_songs=20)
     print(json.dumps(recommendation, indent=4))
