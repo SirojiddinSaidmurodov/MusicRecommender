@@ -15,6 +15,7 @@ let searchApp = new Vue({
                     if (response.data.total === 0) {
                         this.result = []
                     } else {
+                        console.log(response)
                         this.result = response.data.tracks.items
                     }
                 })

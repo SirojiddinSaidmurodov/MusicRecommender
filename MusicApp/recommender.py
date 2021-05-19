@@ -93,7 +93,7 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
 
 
 def search_songs(song):
-    return sp.search(q='track: {}'.format(song), limit=20)
+    return sp.search(q=song, type='track', limit=50, market=market)
 
 
 def get_songs(songs):

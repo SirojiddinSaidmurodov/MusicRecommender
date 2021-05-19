@@ -59,8 +59,13 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
+@login_required
 def search_json(request, query):
-    return JsonResponse(search_songs(query), safe=False)
+    results = search_songs(query)
+    liked = list(LikedSongs.objects.filter(user=request.user).values_list('spotify_id', flat=True))
+    for song in results["tracks"]["items"]:
+        song["liked"] = song['id'] in liked
+    return JsonResponse(results, safe=False)
 
 
 @login_required
