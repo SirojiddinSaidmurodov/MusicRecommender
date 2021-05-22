@@ -1,6 +1,7 @@
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-const songsUrl = 'http://127.0.0.1:8000/songsjson/'
+
+const songsUrl = '/songsjson/'
 let savedSongs = new Vue({
     delimiters: ["[[", "]]"],
     el: '#saved',
@@ -19,7 +20,7 @@ let savedSongs = new Vue({
                 } else {
                     this.songs = []
                 }
-                axios.get('http://127.0.0.1:8000/recommendation/').then(
+                axios.get('/recommendation/').then(
                     response => {
                         if (response.data !== undefined) {
                             this.recommendations = response.data.tracks
@@ -32,12 +33,12 @@ let savedSongs = new Vue({
 
         },
         dislike(song) {
-            axios.delete('http://127.0.0.1:8000/songs/' + song).then(response => {
+            axios.delete('/songs/' + song).then(response => {
                 this.refresh()
             })
         },
         like(song) {
-            axios.post('http://127.0.0.1:8000/songs/' + song).then(respone => {
+            axios.post('/songs/' + song).then(respone => {
                 this.refresh()
             })
         },

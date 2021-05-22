@@ -1,6 +1,6 @@
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-const songsUrl = 'http://127.0.0.1:8000/search/'
+const songsUrl = '/search/'
 let searchApp = new Vue({
     delimiters: ["[[", "]]"],
     el: '#searchApp',
@@ -24,7 +24,7 @@ let searchApp = new Vue({
             }
         },
         like(song) {
-            axios.post('http://127.0.0.1:8000/songs/' + song)
+            axios.post('/songs/' + song)
         },
         toggle(audio) {
             if (this.oldId) {
