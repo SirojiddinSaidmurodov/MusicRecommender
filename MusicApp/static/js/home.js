@@ -9,10 +9,15 @@ let savedSongs = new Vue({
         recommendations: undefined,
         songs: undefined,
         playing: null,
-        oldId: null
+        oldId: null,
+        loadingRec: true,
+        loadSaved: true,
     },
     methods: {
+
         refresh() {
+            this.loadingRec = true
+            this.loadSaved = true
             axios.get(songsUrl).then(response => {
                 if (response.data !== undefined) {
                     this.songs = response.data.tracks
@@ -20,6 +25,8 @@ let savedSongs = new Vue({
                 } else {
                     this.songs = []
                 }
+                this.loadSaved = false
+
                 axios.get('/recommendation/').then(
                     response => {
                         if (response.data !== undefined) {
@@ -27,8 +34,10 @@ let savedSongs = new Vue({
                         } else {
                             this.recommendations = []
                         }
+                        this.loadingRec = false
                     }
                 )
+
             })
 
         },
