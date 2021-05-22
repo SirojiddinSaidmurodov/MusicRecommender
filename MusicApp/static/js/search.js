@@ -25,6 +25,19 @@ let searchApp = new Vue({
         },
         like(song) {
             axios.post('/songs/' + song)
+            this.result.forEach(item => {
+                if (item['id'] === song) {
+                    item['liked'] = true
+                }
+            })
+        },
+        dislike(song) {
+            axios.delete('/songs/' + song)
+            this.result.forEach(item => {
+                if (item['id'] === song) {
+                    item['liked'] = false
+                }
+            })
         },
         toggle(audio) {
             if (this.oldId) {

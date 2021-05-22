@@ -12,3 +12,4 @@ DATABASES = {
         'PASSWORD': os.environ["DB_PASSWORD"],
     }
 }
+DEBUG = False

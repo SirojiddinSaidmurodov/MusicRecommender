@@ -4,7 +4,7 @@
 
 {% block content %}
     {% load static %}
-    <div class="">
+    <div class="py-5">
         <div class="row" id="saved">
             <div class="col-12 col-xs-12 col-sm-12 col-md-7 col-lg-7 order-last order-md-first">
                 <h4 class="display-6">Your favorite songs</h4>
@@ -22,7 +22,7 @@
                      class="row row-cols-1 row row-cols-xs-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2  g-4">
 
                     <div v-for="song in songs">
-                        <div class="card h-100 text-dark bg-light">
+                        <div class="card h-100 text-dark bg-light shadow">
                             <div class="card-body">
                                 <div class="row g-0">
                                     <div class="col-5">
@@ -30,15 +30,17 @@
                                              class="rounded card-img-top">
                                     </div>
                                     <div class="col-7">
-                                        <div v-if="song.artists.length > 1" class="card-title">
-                                            <h6 v-for="artist in song.artists" class="card-title">
-                                                [[artist.name]]
-                                            </h6>
+                                        <div class="mx-3">
+                                            <div v-if="song.artists.length > 1" class="card-title">
+                                                <h6 v-for="artist in song.artists" class="card-title">
+                                                    [[artist.name]]
+                                                </h6>
+                                            </div>
+                                            <div v-if="song.artists.length == 1">
+                                                <h6 class="card-title"> [[song.artists[0].name]]</h6>
+                                            </div>
+                                            <p class="card-text">[[song.name]]</p>
                                         </div>
-                                        <div v-if="song.artists.length == 1">
-                                            <h6 class="card-title"> [[song.artists[0].name]]</h6>
-                                        </div>
-                                        <p class="card-text">[[song.name]]</p>
                                     </div>
 
                                 </div>
@@ -72,9 +74,8 @@
                      class="row row-cols-2 row-cols-xs-3 row-cols-sm-3 row-cols-md-2 row-cols-lg-2  g-4"
                      v-if="recommendations!==undefined">
                     <div v-for="song in recommendations" class="col">
-                        <div class="card h-100 border-warning text-white bg-dark">
+                        <div class="card h-100 border-dark text-white bg-dark shadow">
                             <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url"
-                                 style=""
                                  class="rounded card-img-top">
                             <div class="card-body">
                                 <div v-if="song.artists.length > 1">

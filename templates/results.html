@@ -4,12 +4,12 @@
 
 {% block content %}
     {% load static %}
-    <div id="searchApp">
+    <div id="searchApp" class="py-5">
         <div class="input-group mb-3 input-group-lg">
             <span class="input-group-text" id="addon-wrapping">Results for </span>
             <input type="text" class="form-control" placeholder="Start here typing to search" aria-label="Query"
                    aria-describedby="addon-wrapping" v-model="query" v-on:keyup.enter="get_result()">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="get_result()">
+            <button class="btn btn-outline-dark" type="button" id="button-addon2" v-on:click="get_result()">
                 Search
             </button>
         </div>
@@ -17,13 +17,13 @@
             <div v-if="result.length==0">
                 No songs found
             </div>
-            <div v-if="result.length>0" class="row row-cols-1 row-cols-md-4 g-4">
+            <div v-if="result.length>0"
+                 class="row row-cols-2 row-cols-xs-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
                 <div v-for="song in result" class="col">
-                    <div class="card h-100" style="width: 15rem;">
-                        <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url" height="225px"
-                             width="225px"
-                             style="padding: 0.5rem">
-                        <div class="card-body">
+                    <div class="card h-100 shadow" v-bind:class="{'bg-dark' : song.liked}">
+                        <img alt="album" class="rounded card-img-top" loading="lazy"
+                             v-bind:src="song.album.images[1].url">
+                        <div class="card-body" v-bind:class="{'bg-dark' : song.liked, 'text-white':song.liked}">
                             <div v-if="song.artists.length > 1">
                                 <h6 v-for="artist in song.artists" class="card-title">
                                     [[artist.name]]
@@ -36,10 +36,15 @@
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
-                                <button v-on:click="like(song.id)" class="btn btn-dark">
+                                <button v-if="!song.liked" v-on:click="like(song.id)"
+                                        class="btn btn-dark border border-white">
                                     <img src="{% static 'like.png' %}">
                                 </button>
-                                <button v-if="song.preview_url!==null" class="btn btn-dark"
+                                <button v-if="song.liked" v-on:click="dislike(song.id)"
+                                        class="btn btn-dark border border-white">
+                                    <img src="{% static 'dislike.png' %}">
+                                </button>
+                                <button v-if="song.preview_url!==null" class="btn btn-dark border border-white"
                                         v-on:click="toggle(song)">
                                     <img src="{% static 'play.png' %}" alt="play" v-bind:id="song.id"></button>
                             </div>
