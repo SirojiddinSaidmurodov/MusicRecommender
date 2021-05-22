@@ -15,9 +15,7 @@ load_dotenv()
 
 warnings.filterwarnings("ignore")
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=os.environ["SPOTIFY_CLIENT_ID"],
-                                                           client_secret=os.environ["SPOTIFY_CLIENT_SECRET"]),
-                     language='RU')
-market = 'RU'
+                                                           client_secret=os.environ["SPOTIFY_CLIENT_SECRET"]))
 
 song_cluster_pipeline = load('blobs/song_cluster')
 data = pd.read_csv("blobs/data.csv")
@@ -39,7 +37,7 @@ def get_song_data_by_id(spotify_id, spotify_data):
 
 def find_song_by_id(spotify_id):
     song_data = defaultdict()
-    results = sp.track(spotify_id, market=market)
+    results = sp.track(spotify_id)
     if not results:
         return None
 
@@ -93,12 +91,12 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
 
 
 def search_songs(song):
-    return sp.search(q=song, type='track', limit=50, market=market)
+    return sp.search(q=song, type='track', limit=50)
 
 
 def get_songs(songs):
     if len(songs) > 0:
-        return sp.tracks(songs, market=market)
+        return sp.tracks(songs)
     else:
         return []
 
