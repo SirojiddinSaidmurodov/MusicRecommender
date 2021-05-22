@@ -6,26 +6,24 @@
     {% load static %}
     <div class="">
         <div class="row" id="saved">
-            <div class="col-8">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-7 col-lg-7 order-last order-md-first">
                 <h4 class="display-6">Your favorite songs</h4>
 
                 <div v-if="songs==undefined">
                     No songs saved
                 </div>
 
-                <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="row row-cols-1 row row-cols-xs-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2  g-4">
 
                     <div v-for="song in songs">
-                        <div class="card h-100 text-dark bg-light" style="max-width: 30rem">
+                        <div class="card h-100 text-dark bg-light">
                             <div class="card-body">
                                 <div class="row g-0">
-                                    <div class="col-md-5">
+                                    <div class="col-5">
                                         <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url"
-                                             style="max-height: 8rem;
-                                                    max-width: 8rem"
                                              class="rounded card-img-top">
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-7">
                                         <div v-if="song.artists.length > 1" class="card-title">
                                             <h6 v-for="artist in song.artists" class="card-title">
                                                 [[artist.name]]
@@ -53,20 +51,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-5 col-lg-5 order-first order-md-last">
                 <h4 class="display-6">Recommendations</h4>
 
                 <div v-if="recommendations==undefined">
                     No recommendations
                 </div>
 
-                <div v-if="recommendations!==undefined" class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="row row-cols-2 row-cols-xs-3 row-cols-sm-3 row-cols-md-2 row-cols-lg-2  g-4"
+                     v-if="recommendations!==undefined">
                     <div v-for="song in recommendations" class="col">
-                        <div class="card h-100 border-warning text-white bg-dark" style="max-width: 10rem;">
+                        <div class="card h-100 border-warning text-white bg-dark">
                             <img alt="album" loading="lazy" v-bind:src="song.album.images[1].url"
-                                 style="max-width: 9rem;
-                                 max-height: 9rem;"
-                                 class="rounded card-img-top m-2">
+                                 style=""
+                                 class="rounded card-img-top">
                             <div class="card-body">
                                 <div v-if="song.artists.length > 1">
                                     <h6 v-for="artist in song.artists" class="card-title">
