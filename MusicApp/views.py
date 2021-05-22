@@ -99,3 +99,7 @@ def get_recommendations(request):
         return JsonResponse(get_songs(recommend(songlist)), safe=False)
     else:
         return JsonResponse("[]", safe=False)
+
+
+def about(request):
+    return render(request, 'nologinindex.html')
