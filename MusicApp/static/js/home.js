@@ -6,8 +6,8 @@ let savedSongs = new Vue({
     delimiters: ["[[", "]]"],
     el: '#saved',
     data: {
-        recommendations: undefined,
-        songs: undefined,
+        recommendations: [],
+        songs: [],
         playing: null,
         oldId: null,
         loadingRec: true,
@@ -19,8 +19,13 @@ let savedSongs = new Vue({
             this.loadingRec = true
             this.loadSaved = true
             axios.get(songsUrl).then(response => {
-                if (response.data !== undefined) {
+                if (response.status === 200) {
+                    console.log(response)
                     this.songs = response.data.tracks
+                    this.songs.forEach(item => {
+                        let artists = item['artists'].map(artist => artist.name);
+                        item['artistStr'] = artists.join(', ')
+                    })
                     console.log(this.songs)
                 } else {
                     this.songs = []
@@ -29,8 +34,15 @@ let savedSongs = new Vue({
 
                 axios.get('/recommendation/').then(
                     response => {
-                        if (response.data !== undefined) {
+                        if (response.status === 200) {
                             this.recommendations = response.data.tracks
+
+                            this.recommendations.forEach(item => {
+                                let artists = item['artists'].map(artist => artist.name);
+                                item['artistStr'] = artists.join(', ')
+                            })
+
+                            console.log(this.recommendations)
                         } else {
                             this.recommendations = []
                         }

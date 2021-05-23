@@ -5,6 +5,7 @@ from collections import defaultdict
 
 import numpy as np
 import pandas as pd
+import sklearn.pipeline
 import spotipy
 from dotenv import load_dotenv
 from joblib import load
@@ -17,7 +18,7 @@ warnings.filterwarnings("ignore")
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=os.environ["SPOTIFY_CLIENT_ID"],
                                                            client_secret=os.environ["SPOTIFY_CLIENT_SECRET"]))
 
-song_cluster_pipeline = load('blobs/song_cluster')
+song_cluster_pipeline: sklearn.pipeline.Pipeline = load('blobs/song_cluster')
 data = pd.read_csv("blobs/data.csv")
 
 number_cols = ['valence', 'year', 'acousticness', 'danceability',
@@ -70,23 +71,23 @@ def get_mean_vector(song_list, spotify_data):
     return np.mean(song_matrix, axis=0)
 
 
-def recommend(song_list):
-    return recommend_songs(song_list, data, n_songs=21)
+def recommend(song_list, n=20):
+    return recommend_songs(song_list, data, n_songs=n)
 
 
-def recommend_songs(song_list, spotify_data, n_songs=10):
-    # TODO: change the algo: delete liked songs first, then get n_songs recommendations
-    metadata_cols = ['id']
+def recommend_songs(song_list: list[str], spotify_data, n_songs=10):
+    metadata_cols: list[str] = ['id']
     song_center = get_mean_vector(song_list, spotify_data)
     scaler = song_cluster_pipeline.steps[0][1]
     scaled_data = scaler.transform(spotify_data[number_cols])
     scaled_song_center = scaler.transform(song_center.reshape(1, -1))
     distances = cdist(scaled_song_center, scaled_data, 'cosine')
-    index = list(np.argsort(distances)[:, :n_songs][0])
+    index = list(np.argsort(distances)[:, :1000][0])
 
     rec_songs = spotify_data.iloc[index]
     rec_songs = rec_songs[~rec_songs['id'].isin(song_list)]
     recsongsdict = rec_songs[metadata_cols].to_dict(orient='records')
+    recsongsdict = recsongsdict[:n_songs]
     return [song['id'] for song in recsongsdict]
 
 

@@ -47,11 +47,16 @@ def account(request):
 def search(request):
     return render(request, 'results.html')
 
-
+@api_view(('GET',))
+@renderer_classes((JSONRenderer,))
 @login_required
 def songs_json(request):
     songlist = [song.spotify_id for song in LikedSongs.objects.filter(user=request.user)]
-    return JsonResponse(get_songs(songlist), safe=False)
+    result = get_songs(songlist)
+    if len(result) > 0:
+        return JsonResponse(result, safe=False)
+    else:
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserList(generics.ListAPIView):
@@ -98,7 +103,7 @@ def get_recommendations(request):
     if len(songlist) > 0:
         return JsonResponse(get_songs(recommend(songlist)), safe=False)
     else:
-        return JsonResponse("[]", safe=False)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 def about(request):

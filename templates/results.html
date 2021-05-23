@@ -24,14 +24,7 @@
                         <img alt="album" class="rounded card-img-top" loading="lazy"
                              v-bind:src="song.album.images[1].url">
                         <div class="card-body" v-bind:class="{'bg-dark' : song.liked, 'text-white':song.liked}">
-                            <div v-if="song.artists.length > 1">
-                                <h6 v-for="artist in song.artists" class="card-title">
-                                    [[artist.name]]
-                                </h6>
-                            </div>
-                            <div v-if="song.artists.length == 1">
-                                <h6 class="card-title"> [[song.artists[0].name]]</h6>
-                            </div>
+                            <h6 class="card-title">[[song.artistStr]]</h6>
                             <p class="card-text">[[song.name]]</p>
                         </div>
                         <div class="card-footer">

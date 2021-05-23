@@ -17,6 +17,10 @@ let searchApp = new Vue({
                     } else {
                         console.log(response)
                         this.result = response.data.tracks.items
+                        this.result.forEach(item => {
+                            let artists = item['artists'].map(artist => artist.name);
+                            item['artistStr'] = artists.join(', ')
+                        })
                     }
                 })
             } else {
