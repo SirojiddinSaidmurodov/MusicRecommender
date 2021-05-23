@@ -6,11 +6,14 @@ let searchApp = new Vue({
     el: '#searchApp',
     data: {
         query: '',
-        result: []
+        result: [],
+        loading: false
     },
     methods: {
         get_result() {
             if (this.query !== '') {
+                this.loading = true;
+                this.result = [];
                 axios.get(songsUrl + this.query).then(response => {
                     if (response.data.total === 0) {
                         this.result = []
@@ -22,6 +25,7 @@ let searchApp = new Vue({
                             item['artistStr'] = artists.join(', ')
                         })
                     }
+                    this.loading = false;
                 })
             } else {
                 this.result = []
