@@ -10,25 +10,30 @@ let searchApp = new Vue({
         loading: false
     },
     methods: {
-        get_result() {
+        async get_result() {
             if (this.query !== '') {
                 this.loading = true;
                 this.result = [];
                 axios.get(songsUrl + this.query).then(response => {
-                    if (response.data.total === 0) {
+                    if (typeof response.data.tracks.total === undefined) {
                         this.result = []
                     } else {
-                        console.log(response)
-                        this.result = response.data.tracks.items
-                        this.result.forEach(item => {
-                            let artists = item['artists'].map(artist => artist.name);
-                            item['artistStr'] = artists.join(', ')
-                        })
+                        if (response.data.tracks.total === 0) {
+                            this.result = []
+                        } else {
+                            console.log(response)
+                            this.result = response.data.tracks.items
+                            this.result.forEach(item => {
+                                let artists = item['artists'].map(artist => artist.name);
+                                item['artistStr'] = artists.join(', ')
+                            })
+                        }
                     }
                     this.loading = false;
                 })
             } else {
                 this.result = []
+                this.loading = false
             }
         },
         like(song) {

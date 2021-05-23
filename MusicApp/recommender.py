@@ -16,8 +16,9 @@ load_dotenv()
 
 warnings.filterwarnings("ignore")
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=os.environ["SPOTIFY_CLIENT_ID"],
-                                                           client_secret=os.environ["SPOTIFY_CLIENT_SECRET"]))
-
+                                                           client_secret=os.environ["SPOTIFY_CLIENT_SECRET"]),
+                     language='ru')
+market = 'RU'
 song_cluster_pipeline: sklearn.pipeline.Pipeline = load('blobs/song_cluster')
 data = pd.read_csv("blobs/data.csv")
 

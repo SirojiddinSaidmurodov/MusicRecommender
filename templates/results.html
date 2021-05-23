@@ -6,12 +6,8 @@
     {% load static %}
     <div id="searchApp" class="py-5">
         <div class="input-group mb-3 input-group-lg">
-            <span class="input-group-text" id="addon-wrapping">Results for </span>
-            <input type="text" class="form-control" placeholder="Start here typing to search" aria-label="Query"
-                   aria-describedby="addon-wrapping" v-model="query" v-on:keyup.enter="get_result()">
-            <button class="btn btn-outline-dark" type="button" id="button-addon2" v-on:click="get_result()">
-                Search
-            </button>
+            <input type="text" class="form-control" placeholder="Start typing here to search" aria-label="Query"
+                   aria-describedby="addon-wrapping" v-model="query" v-on:input="get_result()">
         </div>
         <div class="row">
             <div class="d-flex justify-content-center">
