@@ -14,4 +14,5 @@ urlpatterns = [
     path('users/', views.UserList.as_view()),
     path('recommendation/', views.get_recommendations),
     path('about/', views.about),
+    path('similar/<str:song>', views.similar),
 ]

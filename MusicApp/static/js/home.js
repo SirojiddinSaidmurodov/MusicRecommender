@@ -12,6 +12,8 @@ let savedSongs = new Vue({
         oldId: null,
         loadingRec: true,
         loadSaved: true,
+        loadingSimilar: true,
+        similar: []
     },
     methods: {
 
@@ -94,6 +96,19 @@ let savedSongs = new Vue({
                 this.oldId = audio.id
                 document.getElementById(audio.id).src = '/static/pause' + suffix + '.png'
             }
+        },
+        getSimilar(song) {
+            this.similar = []
+            this.loading = true
+            axios.get('similar/' + song).then(response => {
+                this.loading = false
+                this.similar = response.data.tracks
+                this.similar.forEach(item => {
+                    let artists = item['artists'].map(artist => artist.name);
+                    item['artistStr'] = artists.join(', ')
+                })
+                console.log(this.similar)
+            })
         }
     },
     created() {

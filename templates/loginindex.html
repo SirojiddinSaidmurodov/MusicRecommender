@@ -41,11 +41,16 @@
                             <div class="card-footer">
                                 <div class="btn-group">
                                     <button class="btn btn-dark" v-on:click="dislike(song.id)" title="Dislike this!">
-                                        <img src="{% static 'dislike.png' %}"></button>
+                                        <img src="{% static 'dislike.png' %}">
+                                    </button>
                                     <button v-if="song.preview_url!==null" class="btn btn-dark"
                                             title="Listen preview..."
                                             v-on:click="toggle(song)">
                                         <img src="{% static 'play.png' %}" alt="play" v-bind:id="song.id">
+                                    </button>
+                                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                            v-on:click="getSimilar(song.id)">
+                                        <img src="{% static 'similar_light.png' %}">
                                     </button>
                                 </div>
                             </div>
@@ -89,7 +94,34 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <ul class="list-group">
+                                    <li class="list-group-item" v-for="similarSong in similar">
+                                        <div class="d-flex">
+                                            <h5 class="mb-1">[[similarSong.artistStr]]</h5>
+                                        </div>
+                                        <p class="mb-1">[[similarSong.name]]</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

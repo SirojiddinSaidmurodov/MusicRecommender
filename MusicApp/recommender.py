@@ -103,6 +103,10 @@ def get_songs(songs):
         return []
 
 
+def get_similar(song):
+    return recommend_songs(song_list=[song], spotify_data=data)
+
+
 if __name__ == '__main__':
     song_cluster_pipeline = load('../blobs/song_cluster')
     data = pd.read_csv("../blobs/data.csv")

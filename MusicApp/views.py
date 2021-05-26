@@ -10,7 +10,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from .models import LikedSongs
-from .recommender import get_songs, recommend
+from .recommender import get_songs, recommend, get_similar
 from .recommender import search_songs
 from .serializer import UserSerializer
 
@@ -46,6 +46,7 @@ def account(request):
 @login_required
 def search(request):
     return render(request, 'results.html')
+
 
 @api_view(('GET',))
 @renderer_classes((JSONRenderer,))
@@ -108,3 +109,10 @@ def get_recommendations(request):
 
 def about(request):
     return render(request, 'nologinindex.html')
+
+
+@api_view(('GET',))
+@renderer_classes((JSONRenderer,))
+@login_required
+def similar(request, song):
+    return JsonResponse(get_songs(get_similar(song)), safe=False)
