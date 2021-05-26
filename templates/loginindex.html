@@ -40,9 +40,10 @@
                             </div>
                             <div class="card-footer">
                                 <div class="btn-group">
-                                    <button class="btn btn-dark" v-on:click="dislike(song.id)">
+                                    <button class="btn btn-dark" v-on:click="dislike(song.id)" title="Dislike this!">
                                         <img src="{% static 'dislike.png' %}"></button>
                                     <button v-if="song.preview_url!==null" class="btn btn-dark"
+                                            title="Listen preview..."
                                             v-on:click="toggle(song)">
                                         <img src="{% static 'play.png' %}" alt="play" v-bind:id="song.id">
                                     </button>
@@ -77,10 +78,10 @@
                             </div>
                             <div class="card-footer">
                                 <div class="btn-group">
-                                    <button class="btn btn-light" v-on:click="like(song.id)">
+                                    <button class="btn btn-light" v-on:click="like(song.id)" title="Like this!">
                                         <img src="{% static 'like-dark.png' %}"></button>
                                     <button v-if="song.preview_url!==null" class="btn btn-light"
-                                            v-on:click="toggleDark(song)">
+                                            v-on:click="toggleDark(song)" title="Like this!">
                                         <img src="{% static 'play-dark.png' %}" alt="play" v-bind:id="song.id"></button>
                                 </div>
                             </div>

@@ -30,16 +30,16 @@
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
-                                <button v-if="!song.liked" v-on:click="like(song.id)"
+                                <button v-if="!song.liked" v-on:click="like(song.id)" title="Like this!"
                                         class="btn btn-dark border border-white">
                                     <img src="{% static 'like.png' %}">
                                 </button>
-                                <button v-if="song.liked" v-on:click="dislike(song.id)"
+                                <button v-if="song.liked" v-on:click="dislike(song.id)" title="Dislike this!"
                                         class="btn btn-dark border border-white">
                                     <img src="{% static 'dislike.png' %}">
                                 </button>
                                 <button v-if="song.preview_url!==null" class="btn btn-dark border border-white"
-                                        v-on:click="toggle(song)">
+                                        title="Listen preview..." v-on:click="toggle(song)">
                                     <img src="{% static 'play.png' %}" alt="play" v-bind:id="song.id"></button>
                             </div>
                         </div>
